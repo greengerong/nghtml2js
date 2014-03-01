@@ -1,0 +1,1 @@
+angular.module("${module}", [<#list dependencies as item>"${item}"<#if item_has_next>, </#if></#list>])
