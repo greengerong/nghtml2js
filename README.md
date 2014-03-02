@@ -2,7 +2,7 @@
 ####nghtml2js
 =========================
 
-## Maven plugin for ng html2js.
+ This maven plugin for Angular Directive html2js.
 
 ## How to use this plugin:
 
