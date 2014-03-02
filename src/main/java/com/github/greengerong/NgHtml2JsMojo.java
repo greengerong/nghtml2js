@@ -35,7 +35,7 @@ public class NgHtml2JsMojo extends AbstractMojo {
     private String module;
 
     @Parameter(required = true)
-    private String htmls;
+    private String html;
 
     @Parameter(required = false)
     private File output;
@@ -45,22 +45,22 @@ public class NgHtml2JsMojo extends AbstractMojo {
 
 
     public void execute() throws MojoExecutionException {
-        checkNotNull(htmls, "Html dir should be not empty");
+        checkNotNull(html, "Html dir should be not empty");
         checkNotNull(module, "Module name should be not empty");
-        if (!FileUtils.fileExists(htmls)) {
+        if (!FileUtils.fileExists(html)) {
             getLog().warn("Html file is not exists.");
             return;
         }
 
         if (output == null || !output.exists()) {
-            output = new File(htmls);
+            output = new File(html);
         }
 
         if (extensions == null || extensions.length == 0) {
             extensions = new String[]{"html"};
         }
 
-        new NgHtml2JsProcessor(module, extensions, getLog()).exec(htmls, output);
+        new NgHtml2JsProcessor(module, extensions, getLog()).exec(html, output);
     }
 
 }

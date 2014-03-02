@@ -32,8 +32,8 @@ public class TemplateService {
                 .transform(new Function<String, HtmlModule>() {
                     @Override
                     public HtmlModule apply(String file) {
-                        final String modulename = file.replaceAll(group.getBaseName(), "/");
-                        return new HtmlModule(modulename, html2Js(file, modulename));
+                        final String moduleName = file.replaceAll(group.getBaseName(), "/").replaceAll("//", "/");
+                        return new HtmlModule(moduleName, html2Js(file, moduleName));
                     }
                 }).toList();
 
