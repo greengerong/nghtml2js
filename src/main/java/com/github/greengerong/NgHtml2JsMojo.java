@@ -16,55 +16,51 @@ package com.github.greengerong;
  * limitations under the License.
  */
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 import java.io.File;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-/**
- * Goal which touches a timestamp file.
- *
- * @goal touch
- * @phase process-sources
- */
+
+@Mojo(name = "run", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 public class NgHtml2JsMojo extends AbstractMojo {
-    /**
-     * Location of the file.
-     *
-     * @parameter expression="${project.build.directory}"
-     * @required
-     */
+
+    @Parameter(required = true)
     private String module;
 
-    /**
-     * Location of the file.
-     *
-     * @parameter expression="${project.build.directory}"
-     * @required
-     */
+    @Parameter(required = true)
     private String htmls;
 
-    /**
-     * Location of the file.
-     *
-     * @parameter expression="${project.build.directory}"
-     * @required
-     */
+    @Parameter(required = false)
     private File output;
 
-    /**
-     * extensions which will be processed.
-     */
+    @Parameter(required = false)
     private String[] extensions;
 
 
     public void execute() throws MojoExecutionException {
         checkNotNull(htmls, "Html dir should be not empty");
+        checkNotNull(module, "Module name should be not empty");
+        if (!FileUtils.fileExists(htmls)) {
+            getLog().warn("Html file is not exists.");
+            return;
+        }
+
+        if (output == null || !output.exists()) {
+            output = new File(htmls);
+        }
+
         if (extensions == null || extensions.length == 0) {
             extensions = new String[]{"html"};
         }
+
         new NgHtml2JsProcessor(module, extensions, getLog()).exec(htmls, output);
     }
 

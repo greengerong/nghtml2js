@@ -49,18 +49,18 @@ public class NgHtml2JsProcessor {
         try {
             FileUtils.fileWrite(file, String.format("%s%s%s", html, NEW_LINE, moduleHtml));
         } catch (Exception e) {
-            throw new RuntimeException(String.format("Can not write html to file %s", file), e);
+            final String msg = String.format("Can not write html to file %s", file);
+            log.error(msg, e);
+            throw new RuntimeException(msg, e);
         }
+
+        log.info(String.format("ng-html success, write to file %s.", file));
     }
 
     private FileGroup getFileGroup(String htmlBaseDir) {
-        if (FileUtils.fileExists(htmlBaseDir)) {
-            final String[] children = FileUtils.getFilesFromExtension(htmlBaseDir, extensions);
-            final FileGroup group = new FileGroup(htmlBaseDir, children);
-            return templateService.html2Js(group);
-        }
-
-        throw new RuntimeException(String.format("File %s do not exist.", htmlBaseDir));
+        final String[] children = FileUtils.getFilesFromExtension(htmlBaseDir, extensions);
+        final FileGroup group = new FileGroup(htmlBaseDir, children);
+        return templateService.html2Js(group);
     }
 
     private Function<HtmlModule, String> getHtml() {
