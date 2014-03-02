@@ -2,9 +2,9 @@
 ####nghtml2js
 =========================
 
-** Maven plugin for ng html2js.
+## Maven plugin for ng html2js.
 
-** How to use this plugin:
+## How to use this plugin:
 
         <plugin>
             <groupId>com.github.greengerong</groupId>
