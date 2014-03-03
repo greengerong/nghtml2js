@@ -9,7 +9,7 @@
         <plugin>
             <groupId>com.github.greengerong</groupId>
             <artifactId>nghtml2js</artifactId>
-            <version>0.0.1</version>
+            <version>0.0.2</version>
             <configuration>
                 <module>demo.template</module>
                 <html>${project.basedir}</html>
