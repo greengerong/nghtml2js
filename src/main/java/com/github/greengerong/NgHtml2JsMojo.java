@@ -43,8 +43,16 @@ public class NgHtml2JsMojo extends AbstractMojo {
     @Parameter(required = false)
     private String[] extensions;
 
+    @Parameter(required = false)
+    private boolean skip;
+
 
     public void execute() throws MojoExecutionException {
+        if (skip) {
+            getLog().warn("Html2Js task spiking....");
+            return;
+        }
+
         checkNotNull(html, "Html dir should be not empty");
         checkNotNull(module, "Module name should be not empty");
         if (!FileUtils.fileExists(html)) {
