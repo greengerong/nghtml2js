@@ -38,8 +38,8 @@ public class TemplateService {
                         if (url.startsWith("/") || url.startsWith("\\")) {
                             url = url.substring(1);
                         }
-                        final String moduleName = urlPrefixed + url;
-                        return new HtmlModule(moduleName, html2Js(file, moduleName));
+                        final String moduleName = (urlPrefixed == null ? "" : urlPrefixed) + url;
+                        return new HtmlModule(moduleName, html2Js(file, moduleName.trim()));
                     }
                 }).toList();
 
