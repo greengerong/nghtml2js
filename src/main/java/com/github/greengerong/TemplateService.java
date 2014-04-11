@@ -20,8 +20,10 @@ public class TemplateService {
     public static final String NEW_LINE = System.getProperty("line.separator");
     public static final String MODULE_TPL = "module.tpl";
     private final Configuration templateConfig;
+    private String urlPrefixed;
 
-    public TemplateService() {
+    public TemplateService(String urlPrefixed) {
+        this.urlPrefixed = urlPrefixed;
         templateConfig = new Configuration();
         templateConfig.setClassForTemplateLoading(this.getClass(), "/");
     }
@@ -32,7 +34,11 @@ public class TemplateService {
                 .transform(new Function<String, HtmlModule>() {
                     @Override
                     public HtmlModule apply(String file) {
-                        final String moduleName = file.replaceAll(group.getBaseName(), "/").replaceAll("//", "/");
+                        String url = file.replaceAll(group.getBaseName(), "").replaceAll("//", "/").replaceAll("\\\\", "/");
+                        if (url.startsWith("/") || url.startsWith("\\")) {
+                            url = url.substring(1);
+                        }
+                        final String moduleName = urlPrefixed + url;
                         return new HtmlModule(moduleName, html2Js(file, moduleName));
                     }
                 }).toList();

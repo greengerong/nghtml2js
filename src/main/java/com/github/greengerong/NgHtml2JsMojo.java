@@ -46,6 +46,8 @@ public class NgHtml2JsMojo extends AbstractMojo {
     @Parameter(required = false)
     private boolean skip;
 
+    @Parameter(required = false, defaultValue = "")
+    private String urlPrefixed;
 
     public void execute() throws MojoExecutionException {
         if (skip) {
@@ -60,15 +62,19 @@ public class NgHtml2JsMojo extends AbstractMojo {
             return;
         }
 
-        if (output == null || !output.exists()) {
+        if (output == null) {
             output = new File(html);
+        }
+
+        if (!output.exists()) {
+            FileUtils.mkdir(output.getParent());
         }
 
         if (extensions == null || extensions.length == 0) {
             extensions = new String[]{"html"};
         }
 
-        new NgHtml2JsProcessor(module, extensions, getLog()).exec(html, output);
+        new NgHtml2JsProcessor(module, extensions, urlPrefixed, getLog()).exec(new File(html).getAbsolutePath(), output);
     }
 
 }

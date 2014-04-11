@@ -17,11 +17,11 @@ public class NgHtml2JsProcessor {
     private final String[] extensions;
     private final TemplateService templateService;
 
-    public NgHtml2JsProcessor(String module, String[] extensions, Log log) {
+    public NgHtml2JsProcessor(String module, String[] extensions, String urlPrefixed, Log log) {
         this.module = module;
         this.log = log;
         this.extensions = extensions;
-        templateService = new TemplateService();
+        templateService = new TemplateService(urlPrefixed);
     }
 
     public void exec(String htmlBaseDir, File output) {
