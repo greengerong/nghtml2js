@@ -34,7 +34,7 @@ public class TemplateService {
                 .transform(new Function<String, HtmlModule>() {
                     @Override
                     public HtmlModule apply(String file) {
-                        String url = file.replaceAll(group.getBaseName(), "").replaceAll("//", "/").replaceAll("\\\\", "/");
+                        String url = file.replace(group.getBaseName(), "").replaceAll("//", "/").replaceAll("\\\\", "/");
                         if (url.startsWith("/") || url.startsWith("\\")) {
                             url = url.substring(1);
                         }
